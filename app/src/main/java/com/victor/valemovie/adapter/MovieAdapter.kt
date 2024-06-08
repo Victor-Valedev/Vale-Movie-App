@@ -3,25 +3,36 @@ package com.victor.valemovie.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.victor.valemovie.api.RetrofitService
 import com.victor.valemovie.databinding.ItemFilmeBinding
 import com.victor.valemovie.model.Movie
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter() : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    private var listMovie: MutableList<String> = mutableListOf()
+    private var listMovie: List<Movie> = emptyList()
 
     fun addList(list: List<Movie>){
-
+        this.listMovie = list
+        notifyDataSetChanged()
     }
 
-    inner class MovieViewHolder(binding: ItemFilmeBinding)
+    inner class MovieViewHolder(val binding: ItemFilmeBinding)
         : RecyclerView.ViewHolder(binding.root){
 
         fun bind(movie: Movie){
 
             val nameMovie = movie.backdrop_path
+            val sizeMovie = "w780"
+            val urlImageBase = RetrofitService.IMAGE_URL
 
+            val urlMovie = urlImageBase + sizeMovie + nameMovie
 
+            Picasso.get()
+                .load(urlMovie)
+                .into(binding.imageItemFilme)
+
+            binding.textTitulo.text = movie.title
         }
 
     }
