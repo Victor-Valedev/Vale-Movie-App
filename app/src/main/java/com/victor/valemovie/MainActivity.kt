@@ -1,6 +1,7 @@
 package com.victor.valemovie
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.victor.valemovie.adapter.MovieAdapter
+import com.victor.valemovie.api.RetrofitService
 import com.victor.valemovie.databinding.ActivityMainBinding
 import com.victor.valemovie.model.MovieResponse
 import kotlinx.coroutines.CoroutineScope
@@ -20,6 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val movieAPI by lazy {
+        RetrofitService.movieAPI
     }
 
     private lateinit var movieAdapter: MovieAdapter
@@ -45,9 +51,25 @@ class MainActivity : AppCompatActivity() {
             var response: Response<MovieResponse>? = null
 
             try {
-
+                response = movieAPI.recoveredPopularMovie(1)
             }catch (e: Exception){
+                showMessenge("Error returning data")
+            }
 
+            if (response != null){
+                if(response.isSuccessful){
+
+                    val movieResponse = response.body()
+                    val listMovies = movieResponse?.movies
+                    if(listMovies != null && listMovies.isNotEmpty()){
+                        //implemented logic
+                    }
+
+                }else{
+                    showMessenge("Error returning data, code:${response.code()}")
+                }
+            }else{
+                showMessenge("Error returning data")
             }
 
         }
