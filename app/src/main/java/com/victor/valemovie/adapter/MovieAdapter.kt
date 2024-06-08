@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.victor.valemovie.databinding.ItemFilmeBinding
+import com.victor.valemovie.model.Movie
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -18,6 +19,7 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
         fun bind(movie: Movie){
 
+            val nameMovie = movie.backdrop_path
 
 
         }
@@ -38,8 +40,8 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
-        var filme = listMovie[position]
-        holder.bind(filme)
+        var movie = listMovie[position]
+        holder.bind(movie)
 
     }
 
