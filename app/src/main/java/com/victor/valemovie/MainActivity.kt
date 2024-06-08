@@ -9,10 +9,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.victor.valemovie.adapter.MovieAdapter
 import com.victor.valemovie.databinding.ActivityMainBinding
+import com.victor.valemovie.model.MovieResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +37,20 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         recoveredRecentMovie()
+        recoveredMoviePopular()
+    }
+
+    private fun recoveredMoviePopular() {
+        jobMoviePopular = CoroutineScope(Dispatchers.IO).launch {
+            var response: Response<MovieResponse>? = null
+
+            try {
+
+            }catch (e: Exception){
+
+            }
+
+        }
     }
 
     private fun recoveredRecentMovie() {
