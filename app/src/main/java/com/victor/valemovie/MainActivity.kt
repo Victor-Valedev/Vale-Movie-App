@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.victor.valemovie.adapter.MovieAdapter
 import com.victor.valemovie.api.RetrofitService
@@ -16,6 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        recoveredRecentMovie()
+        //recoveredRecentMovie()
         recoveredMoviePopular()
     }
 
@@ -62,7 +64,13 @@ class MainActivity : AppCompatActivity() {
                     val movieResponse = response.body()
                     val listMovies = movieResponse?.movies
                     if(listMovies != null && listMovies.isNotEmpty()){
-                        //implemented logic
+
+                        withContext(Dispatchers.Main){
+
+                            movieAdapter.addList(listMovies)
+
+                        }
+
                     }
 
                 }else{
@@ -75,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun recoveredRecentMovie() {
+    /*private fun recoveredRecentMovie() {
 
         jobMovieRecent = CoroutineScope(Dispatchers.IO).launch{
 
@@ -88,10 +96,20 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    }
+    }*/
 
     private fun initializeView() {
-        TODO("Not yet implemented")
+
+        movieAdapter = MovieAdapter()
+        binding.rvLista.adapter = movieAdapter
+
+        binding.rvLista.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+
+
     }
 
     private fun showMessenge(messenge: String){
