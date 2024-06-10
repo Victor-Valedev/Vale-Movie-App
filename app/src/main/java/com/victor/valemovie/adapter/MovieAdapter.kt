@@ -1,25 +1,69 @@
 package com.victor.valemovie.adapter
 
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.victor.valemovie.api.RetrofitService
 import com.victor.valemovie.databinding.ItemFilmeBinding
+import com.victor.valemovie.model.Movie
 
-class MovieAdapter : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(
+    val onClick: (Movie) -> Unit
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
-    inner class MovieViewHolder(binding: ItemFilmeBinding) : RecyclerView.ViewHolder(binding.root){
+    private var listMovie: List<Movie> = emptyList()
+
+    fun addList(list: List<Movie>){
+        this.listMovie = list
+        notifyDataSetChanged()
+    }
+
+    inner class MovieViewHolder(val binding: ItemFilmeBinding)
+        : RecyclerView.ViewHolder(binding.root){
+
+        fun bind(movie: Movie){
+
+            val nameMovie = movie.backdrop_path
+            val sizeMovie = "w780"
+            val urlImageBase = RetrofitService.IMAGE_URL
+
+            val urlMovie = urlImageBase + sizeMovie + nameMovie
+
+            Picasso.get()
+                .load(urlMovie)
+                .into(binding.imageItemFilme)
+
+            binding.textTitulo.text = movie.title
+            binding.clItem.setOnClickListener {
+                onClick(movie)
+            }
+        }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        TODO("Not yet implemented")
-    }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemFilmeBinding.inflate(
+            layoutInflater,
+            parent,
+            false
+        )
+
+        return MovieViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
+        var movie = listMovie[position]
+        holder.bind(movie)
+
+    }
+
+    override fun getItemCount(): Int {
+        return listMovie.size
     }
 
 }

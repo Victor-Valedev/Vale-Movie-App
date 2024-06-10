@@ -22,7 +22,7 @@
         android:id="@+id/textSeries"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:text="Series"
         android:textColor="@color/branco"
@@ -34,32 +34,31 @@
 
     <ImageView
         android:id="@+id/imageLogo"
-        android:layout_width="43dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="95dp"
+        android:layout_height="122dp"
+        android:layout_marginBottom="88dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCapa"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/movielogo" />
 
     <TextView
         android:id="@+id/textFilmes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="32dp"
         android:text="Filmes"
         android:textColor="@color/branco"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageLogo"
         app:layout_constraintStart_toEndOf="@+id/textSeries"
         app:layout_constraintTop_toTopOf="@+id/imageLogo"
-        app:layout_constraintVertical_bias="0.444" />
+        app:layout_constraintVertical_bias="0.428" />
 
     <TextView
         android:id="@+id/textMinhaLista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="24dp"
         android:text="Minha lista"
         android:textColor="@color/branco"
         android:textSize="18sp"
@@ -67,7 +66,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/textFilmes"
         app:layout_constraintTop_toTopOf="@+id/imageLogo"
-        app:layout_constraintVertical_bias="0.444" />
+        app:layout_constraintVertical_bias="0.428" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -85,27 +84,26 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_lista"
-        android:layout_width="409dp"
-        android:layout_height="529dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgCapa"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/textPopulares"
         tools:listitem="@layout/item_filme" />
 
     <TextView
         android:id="@+id/textPopulares"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="212dp"
+        android:layout_marginTop="8dp"
         android:text="Populares"
         android:textColor="@color/branco"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/guideline2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCapa" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
