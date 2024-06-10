@@ -1,6 +1,7 @@
 package com.victor.valemovie.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -8,7 +9,9 @@ import com.victor.valemovie.api.RetrofitService
 import com.victor.valemovie.databinding.ItemFilmeBinding
 import com.victor.valemovie.model.Movie
 
-class MovieAdapter() : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
+class MovieAdapter(
+    val onClick: (Movie) -> Unit
+) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private var listMovie: List<Movie> = emptyList()
 
@@ -33,6 +36,9 @@ class MovieAdapter() : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
                 .into(binding.imageItemFilme)
 
             binding.textTitulo.text = movie.title
+            binding.clItem.setOnClickListener {
+                onClick(movie)
+            }
         }
 
     }
