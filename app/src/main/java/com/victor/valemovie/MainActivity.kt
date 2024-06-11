@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
 import com.victor.valemovie.adapter.MovieAdapter
 import com.victor.valemovie.api.RetrofitService
 import com.victor.valemovie.databinding.ActivityMainBinding
@@ -18,6 +21,7 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
+    private var pageCurrent = 1
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var movieAdapter: MovieAdapter
     var jobMoviePopular: Job? = null
     var jobMovieRecent: Job? = null
+    var gridLayoutManager: GridLayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +49,21 @@ class MainActivity : AppCompatActivity() {
         recoveredMoviePopular()
     }
 
-    private fun recoveredMoviePopular() {
+    private fun recoveredNextPage(){
+
+        if (pageCurrent < 1000){
+            pageCurrent++
+            recoveredMoviePopular(pageCurrent)
+        }
+
+    }
+
+    private fun recoveredMoviePopular(page: Int = 1) {
         jobMoviePopular = CoroutineScope(Dispatchers.IO).launch {
             var response: Response<MovieResponse>? = null
 
             try {
-                response = movieAPI.recoveredPopularMovie(1)
+                response = movieAPI.recoveredPopularMovie(page)
             }catch (e: Exception){
                 showMessenge("Error returning data")
             }
@@ -62,7 +76,6 @@ class MainActivity : AppCompatActivity() {
                     if(listMovies != null && listMovies.isNotEmpty()){
 
                         withContext(Dispatchers.Main){
-
                             movieAdapter.addList(listMovies)
 
                         }
@@ -103,11 +116,27 @@ class MainActivity : AppCompatActivity() {
         }
         binding.rvLista.adapter = movieAdapter
 
-        binding.rvLista.layoutManager = LinearLayoutManager(
+        gridLayoutManager = GridLayoutManager(
             this,
-            LinearLayoutManager.VERTICAL,
-            false
+            2
         )
+
+        binding.rvLista.layoutManager = gridLayoutManager
+
+        binding.rvLista.addOnScrollListener(object : OnScrollListener(){
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+
+                val canScroll = recyclerView.canScrollVertically(1)
+
+                if (!canScroll){
+                    recoveredNextPage()
+                }
+
+
+            }
+
+        })
 
 
     }
