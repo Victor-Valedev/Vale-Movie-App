@@ -1,5 +1,6 @@
 package com.victor.valemovie
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -109,10 +110,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeView() {
 
-        movieAdapter = MovieAdapter{ movie ->
+        movieAdapter = MovieAdapter{ movie, View ->
             val intent = Intent(this, DetailsActivity::class.java)
             intent.putExtra("movie", movie)
-            startActivity(intent)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, View,"movie").toBundle())
         }
         binding.rvLista.adapter = movieAdapter
 

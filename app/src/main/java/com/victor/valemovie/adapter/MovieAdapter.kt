@@ -10,7 +10,7 @@ import com.victor.valemovie.databinding.ItemFilmeBinding
 import com.victor.valemovie.model.Movie
 
 class MovieAdapter(
-    val onClick: (Movie) -> Unit
+    val onClick: (Movie, View) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     private var listMovie = mutableListOf<Movie>()
@@ -37,7 +37,7 @@ class MovieAdapter(
 
             binding.textTitulo.text = movie.title
             binding.clItem.setOnClickListener {
-                onClick(movie)
+                onClick(movie, binding.imageItemFilme)
             }
         }
 
