@@ -33,6 +33,10 @@ class DetailsActivity : AppCompatActivity() {
             if(movie != null){
                 binding.textFilmeTitulo.text = movie.title
                 binding.textResultSinapse.text = movie.overview
+
+                val formattedRating = String.format("%.1f", movie.vote_average)
+                binding.textReview.text = formattedRating
+
                 val nameMovie = movie.backdrop_path
                 val sizeMovie = "w780"
                 val urlBase = RetrofitService.IMAGE_URL
